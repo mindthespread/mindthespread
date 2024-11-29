@@ -1,0 +1,1 @@
+recursive-include mindthespread/sample_feeds *.csv

@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "mindthespread"
+version = "0.1.2"
+description = "Mind The Spread - A Comprehensive Framework for Reinforcement Learning in Trading, Enabling Advanced Backtesting and Live Trading Solutions."
+authors = ["Haggai Shachar <haggai@mindthespread.com>"]
+readme = "README.md"
+
+packages = [
+    { include = "mindthespread" },
+]
+
+include = [
+    { path = "README.md" },
+]
+
+[tool.poetry.dependencies]
+# core dependencies
+python = "^3.11"
+numpy = "1.26.4"
+pandas = "^2.2.3"
+joblib = "^1.4.2"
+python-dotenv = "^1.0.1"
+parse = "^1.20.2"
+gymnasium = "^0.29.1"
+mlflow = "^2.5.0"
+matplotlib = "^3.7.2"
+pandas-ta = { git = "https://github.com/mindthespread/pandas-ta.git", branch = "pandas2.2.3" }
+
+
+# optional dependencies (handled through extras)
+yfinance = { version = "^0.2.44", optional = true }
+pymysql = { version = "^1.1.0", optional = true }
+SQLAlchemy = { version = "^2.0.20", optional = true }
+sshtunnel = { version = "^0.4.0", optional = true }
+TA-Lib = { version = "^0.4.25", optional = true }
+setuptools = "^75.6.0"
+
+[tool.poetry.extras]
+mysql = ["pymysql", "SQLAlchemy", "sshtunnel"]
+ta-lib = ["TA-Lib"]
+tracking = ["mlflow", "matplotlib"]
+yahoo = ["yfinance"]
+
+[tool.poetry.dev-dependencies]
+sphinx = "^5.3.0"
+sphinx-autodoc-typehints = "^1.15.0"
+sphinx-rtd-theme = "^1.1.1"
+sphinxcontrib-napoleon = "^0.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
