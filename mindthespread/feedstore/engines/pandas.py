@@ -12,13 +12,14 @@ class PandasFeedEngine(FeedStoreEngine):
     Concrete implementation of FeedStoreEngine that handles CSV files using pandas.
     """
 
-    def __init__(self, base_path: str):
+    def __init__(self, base_path: str, params = None):
         """
         Initialize the PandasFeedEngine with a base path for storing the feed files.
 
         :param base_path: The directory where feed files are stored.
         """
         self.base_path = base_path
+        self.params = params or {}
         os.makedirs(self.base_path, exist_ok=True)
         logging.info(f"PandasFeedEngine initialized with base path: {self.base_path}")
 
@@ -44,9 +45,13 @@ class PandasFeedEngine(FeedStoreEngine):
             logging.warning(f"Feed file not found for '{feed_name}' at {file_path}. Returning empty DataFrame.")
             return pd.DataFrame()  # Returning an empty DataFrame if the file doesn't exist
 
-        data = pd.read_csv(file_path)
+        data = pd.read_csv(file_path, **self.params)
+
         if 'date' not in data.columns:
             raise ValueError(f"The feed '{feed_name}' is missing a 'date' column.")
+
+        if 'time' in data.columns:
+            data['date'] = data['date'] + ' ' + data['time']
 
         # Ensure the 'date' column is properly parsed
         data['date'] = pd.to_datetime(data['date'], utc=True)
