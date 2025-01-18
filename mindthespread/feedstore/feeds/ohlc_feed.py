@@ -50,5 +50,5 @@ class OHLCFeed(Feed):
                             end_time: datetime = None):
         super().fetch_by_date_range(start_time, end_time)
         self.data['symbol'] = self.symbol
-        self.data.set_index('symbol', inplace=True, append=True)
+        self.data.set_index('symbol', inplace=True, append=True, drop=False)
         return self
