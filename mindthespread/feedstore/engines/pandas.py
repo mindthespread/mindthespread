@@ -55,7 +55,7 @@ class PandasFeedEngine(FeedStoreEngine):
 
         # Ensure the 'date' column is properly parsed
         data['date'] = pd.to_datetime(data['date'], utc=True)
-        data.set_index('date', inplace=True, drop=False)
+        data.set_index('date', inplace=True)
         data.sort_index(inplace=True)
 
         assert len(data.index) == len(data.index.drop_duplicates()), 'duplicate indexes found'
